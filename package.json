@@ -1,0 +1,27 @@
+{
+  "name": "epub-object-ts",
+  "version": "0.0.1",
+  "description": "Epub Object for typescript/javascript",
+  "main": "index.ts",
+  "repository": "https://github.com/Jeffxz/epub-object-ts.git",
+  "author": "Zheng Xu",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --ext .ts,.tsx,.js --no-eslintrc -c ./eslint.js index.ts src/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/mime-types": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.28"
+  }
+}
