@@ -9,6 +9,7 @@ import {
   BasicElement,
 } from './metadata'
 import Spine, { Itemref } from './Spine'
+import { DIR } from './Types'
 
 export {
   Package,
@@ -22,4 +23,5 @@ export {
   BasicElement,
   Spine,
   Itemref,
+  DIR
 }
