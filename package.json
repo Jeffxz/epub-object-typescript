@@ -1,8 +1,9 @@
 {
   "name": "epub-object-ts",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Epub Object for typescript/javascript",
-  "main": "index.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "repository": "https://github.com/Jeffxz/epub-object-ts.git",
   "author": "Zheng Xu",
   "license": "MIT",
