@@ -1,4 +1,5 @@
 import Rootfile from './Rootfile'
+import * as XML from 'xmldoc'
 
 // https://www.w3.org/publishing/epub3/epub-ocf.html#sec-container-metainf-container.xml
 // https://www.w3.org/publishing/epub3/epub-ocf.html#app-schema-container
@@ -19,5 +20,15 @@ export default class Container {
 
   defaultRendition(): Rootfile {
     return this.rootfiles[0]
+  }
+
+  static loadFromXML(xmlString: string): Container | null {
+    const document = new XML.XmlDocument(xmlString)
+    const opfPath = document.descendantWithPath('rootfiles.rootfile')
+    if (opfPath) {
+      return new Container([opfPath?.attr['full-path']])
+    } else {
+      return null
+    }
   }
 }
