@@ -23,5 +23,5 @@ export {
   BasicElement,
   Spine,
   Itemref,
-  DIR
+  DIR,
 }

@@ -1,6 +1,5 @@
-import * as XML from "xmldoc";
-import {XmlElement} from "xmldoc";
-import {DIR} from "./Types";
+import { XmlElement } from 'xmldoc'
+import { DIR } from './Types'
 
 export class Itemref {
   static elementName = 'itemref'
@@ -41,16 +40,17 @@ export default class Spine {
     let spine: Spine | null = null
     try {
       const itemrefNodes = element.childrenNamed(Itemref.elementName)
-      let items: Itemref[] = []
-      for (let node of itemrefNodes) {
-        let item = Itemref.loadFromXMLElement(node)
+      const items: Itemref[] = []
+      for (const node of itemrefNodes) {
+        const item = Itemref.loadFromXMLElement(node)
         if (item != null) {
           items.push(item)
         }
       }
       spine = new Spine(items)
       const direction = element.attr['page-progression-direction']
-      spine.pageProgressionDirection = direction && direction == 'rtl' ? DIR.RTL : DIR.LTR
+      spine.pageProgressionDirection =
+        direction && direction == 'rtl' ? DIR.RTL : DIR.LTR
       return spine
     } catch (error) {
       console.error(error)

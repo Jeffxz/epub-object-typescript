@@ -12,7 +12,7 @@ import {
   BasicElement,
   Spine,
   Itemref,
-  DIR
+  DIR,
 } from './src/Packages'
 
 export {
@@ -32,5 +32,5 @@ export {
   BasicElement,
   Spine,
   Itemref,
-  DIR
+  DIR,
 }

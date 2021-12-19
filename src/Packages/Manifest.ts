@@ -1,7 +1,5 @@
 import { lookup } from 'mime-types'
-import * as XML from "xmldoc";
-import Title from "./metadata/Title";
-import {XmlElement} from "xmldoc";
+import { XmlElement } from 'xmldoc'
 
 export const CoreMediaTypes: string[] = [
   'image/gif',
@@ -86,9 +84,9 @@ export default class Manifest {
   static loadFromXMLElement(element: XmlElement): Manifest | null {
     try {
       const itemNodes = element.childrenNamed(ManifestItem.elementName)
-      let items: ManifestItem[] = []
-      for (let node of itemNodes) {
-        let item = ManifestItem.loadFromXMLElement(node)
+      const items: ManifestItem[] = []
+      for (const node of itemNodes) {
+        const item = ManifestItem.loadFromXMLElement(node)
         if (item != null) {
           items.push(item)
         }

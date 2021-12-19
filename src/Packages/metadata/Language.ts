@@ -1,6 +1,5 @@
 import BasicElement from './BasicElement'
-import * as XML from "xmldoc";
-import {XmlElement} from "xmldoc";
+import { XmlElement } from 'xmldoc'
 
 export default class Language extends BasicElement {
   static elementName = 'dc:language'

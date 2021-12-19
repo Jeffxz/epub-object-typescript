@@ -5,8 +5,7 @@ import Metadata from './Metadata/Metadata'
 import Manifest from './Manifest'
 import Spine from './Spine'
 import { DIR } from './Types'
-import * as XML from "xmldoc";
-import {Title} from "./metadata";
+import * as XML from 'xmldoc'
 
 export default class Package {
   static PREFIX_DCTERMS = 'http://purl.org/dc/terms/'
@@ -43,18 +42,27 @@ export default class Package {
     try {
       const document = new XML.XmlDocument(xmlString)
       const metadataNode = document.childNamed(Metadata.elementName)
-      if (metadataNode == null) throw new Error(`missing ${Metadata.elementName} from opf file`)
+      if (metadataNode == null)
+        throw new Error(`missing ${Metadata.elementName} from opf file`)
       const metadata = Metadata.loadFromXMLElement(metadataNode)
       const manifestNode = document.childNamed('manifest')
-      if (manifestNode == null) throw new Error(`missing ${Manifest.elementName} from opf file`)
+      if (manifestNode == null)
+        throw new Error(`missing ${Manifest.elementName} from opf file`)
       const manifest = Manifest.loadFromXMLElement(manifestNode)
       const spineNode = document.childNamed('spine')
-      if (spineNode == null) throw new Error(`missing ${Spine.elementName} from opf file`)
+      if (spineNode == null)
+        throw new Error(`missing ${Spine.elementName} from opf file`)
       const spine = Spine.loadFromXMLElement(spineNode)
       const uniqueIdentifier = document.attr['unique-identifier']
       const version = document.attr.version
       if (metadata && manifest && spine) {
-        epubPackage = new Package(metadata, manifest, spine, uniqueIdentifier, version)
+        epubPackage = new Package(
+          metadata,
+          manifest,
+          spine,
+          uniqueIdentifier,
+          version
+        )
       }
     } catch (error) {
       throw error
