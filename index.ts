@@ -1,4 +1,4 @@
-import Epub from './src/Epub'
+import Epub, { ReadingOrderItem } from './src/Epub'
 import { Ocf, Container, Rootfile } from './src/OCF'
 import {
   Package,
@@ -17,6 +17,7 @@ import {
 
 export {
   Epub,
+  ReadingOrderItem,
   Ocf,
   Container,
   Rootfile,

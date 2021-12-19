@@ -1,4 +1,4 @@
 export enum DIR {
-  LTR,
-  RTL,
+  LTR = 'ltr',
+  RTL = 'rtl',
 }

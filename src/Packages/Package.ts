@@ -6,6 +6,7 @@ import Manifest from './Manifest'
 import Spine from './Spine'
 import { DIR } from './Types'
 import * as XML from "xmldoc";
+import {Title} from "./metadata";
 
 export default class Package {
   static PREFIX_DCTERMS = 'http://purl.org/dc/terms/'
