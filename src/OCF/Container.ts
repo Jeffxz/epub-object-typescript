@@ -23,12 +23,26 @@ export default class Container {
   }
 
   static loadFromXML(xmlString: string): Container | null {
+    let container: Container | null = null
     const document = new XML.XmlDocument(xmlString)
-    const opfPath = document.descendantWithPath('rootfiles.rootfile')
-    if (opfPath) {
-      return new Container([opfPath?.attr['full-path']])
-    } else {
-      return null
+    const rootfiles = document.childNamed('rootfiles')
+    if (rootfiles == null) {
+      return container
     }
+    const rootfile = rootfiles?.childrenNamed('rootfile')
+    if (rootfile.length == 0) {
+      return container
+    }
+    const opfPathList: string[] = []
+    for (const node of rootfile) {
+      if (node?.attr['full-path']) {
+        opfPathList.push(node?.attr['full-path'])
+      }
+    }
+
+    if (opfPathList) {
+      container = new Container(opfPathList)
+    }
+    return container
   }
 }
