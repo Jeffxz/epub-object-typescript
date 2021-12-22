@@ -1,4 +1,3 @@
-import { lookup } from 'mime-types'
 import { XmlElement } from 'xmldoc'
 
 export const CoreMediaTypes: string[] = [
@@ -34,19 +33,14 @@ export class ManifestItem {
   mediaType: string
   properties?: string[]
 
-  constructor(id: string, href: string) {
+  constructor(id: string, href: string, mediaType: string) {
     this.id = id
     this.href = href
-    this.mediaType = this.detectMediaType(href)
+    this.mediaType = mediaType
   }
 
   setProperties(properties: string[]): void {
     this.properties = properties
-  }
-
-  detectMediaType(filePath: string): string {
-    const result = lookup(filePath)
-    return result ? result : ''
   }
 
   isCoreMedia(): boolean {
@@ -56,9 +50,10 @@ export class ManifestItem {
   static loadFromXMLElement(element: XmlElement): ManifestItem | null {
     const id = element.attr.id
     const href = element.attr.href
+    const mediaType = element.attr['media-type']
     let item: ManifestItem | null = null
-    if (id && href) {
-      item = new ManifestItem(id, href)
+    if (id && href && mediaType) {
+      item = new ManifestItem(id, href, mediaType)
     }
     const properties = element.attr.properties
     if (properties && item) {
