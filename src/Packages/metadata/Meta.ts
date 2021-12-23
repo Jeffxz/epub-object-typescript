@@ -10,22 +10,27 @@ export default class Meta extends BasicElement {
   refines?: string
   scheme?: string
   xmlLang?: string
+  name?: string
+  content?: string
 
-  constructor(property: string, content: string) {
-    super(content)
+  constructor(property: string, text?: string) {
+    super(text)
     this.property = property
   }
 
   static loadFromXMLElement(element: XmlElement): Meta | null {
     let meta: Meta | null = null
     const text = element.firstChild?.toString()
-    if (text == null) {
-      return meta
-    }
     const property = element.attr.property
     meta = new Meta(property, text)
     if (element.attr.refines) {
       meta.refines = element.attr.refines
+    }
+    if (element.attr.name) {
+      meta.name = element.attr.name
+    }
+    if (element.attr.content) {
+      meta.content = element.attr.content
     }
     return meta
   }
