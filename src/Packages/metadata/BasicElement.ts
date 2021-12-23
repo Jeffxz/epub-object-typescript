@@ -1,9 +1,9 @@
 export default abstract class BasicElement {
   nameSpace = 'http://purl.org/dc/elements/1.1/'
   id?: string
-  content: string
+  contentText?: string
 
-  constructor(content: string) {
-    this.content = content
+  constructor(text?: string) {
+    this.contentText = text
   }
 }
