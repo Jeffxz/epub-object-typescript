@@ -2,7 +2,7 @@ import { Command } from 'commander'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as JSZip from "jszip"
-import { Container, Epub, Ocf, Package } from '../index';
+import { Container, Epub, Ocf, Package } from '../../index';
 
 const program = new Command()
 program
