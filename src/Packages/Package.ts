@@ -1,7 +1,7 @@
 /*
  * https://www.w3.org/publishing/epub3/epub-packages.html
  */
-import Metadata from './Metadata/Metadata'
+import Metadata from './metadata/Metadata'
 import Manifest from './Manifest'
 import Spine from './Spine'
 import { DIR } from './Types'
