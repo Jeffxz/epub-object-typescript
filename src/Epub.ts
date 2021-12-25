@@ -23,9 +23,9 @@ export default class Epub {
   epubPackage: Package
   ocf: Ocf
 
-  private _readingOrderList: ReadingOrderItem[]
-  private _isFixedLayout: boolean
-  private _spreadMode: RENDITIONSPREAD | null = null
+  _readingOrderList: ReadingOrderItem[]
+  _isFixedLayout: boolean
+  _spreadMode: RENDITIONSPREAD | null = null
 
   constructor(ocf: Ocf, epubPackage: Package) {
     this.ocf = ocf
