@@ -1,6 +1,6 @@
 {
   "name": "epub-object-ts",
-  "version": "0.0.12",
+  "version": "0.0.14",
   "description": "Epub Object for typescript/javascript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,6 +16,7 @@
     "lint": "eslint --ext .ts,.tsx,.js --no-eslintrc -c ./eslint.js index.ts src/",
     "test": "jest"
   },
+  "type": "commonjs",
   "devDependencies": {
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
