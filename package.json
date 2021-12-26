@@ -16,6 +16,7 @@
     "lint": "eslint --ext .ts,.tsx,.js --no-eslintrc -c ./eslint.js index.ts src/",
     "test": "jest"
   },
+  "type": "commonjs",
   "devDependencies": {
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
