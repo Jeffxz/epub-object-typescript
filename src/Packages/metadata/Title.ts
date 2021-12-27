@@ -14,4 +14,13 @@ export default class Title extends BasicElement {
     }
     return new Title(text)
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Title.elementName}`
+    if (this.id) {
+      xmlString += ` id="${this.id}"`
+    }
+    xmlString += `>${this.contentText}</${Title.elementName}>`
+    return xmlString
+  }
 }

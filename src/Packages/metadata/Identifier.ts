@@ -17,4 +17,13 @@ export default class Identifier extends BasicElement {
     const id = element.attr.id
     return new Identifier(text, id)
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Identifier.elementName}`
+    if (this.id) {
+      xmlString += ` id="${this.id}"`
+    }
+    xmlString += `>${this.contentText}</${Identifier.elementName}>`
+    return xmlString
+  }
 }

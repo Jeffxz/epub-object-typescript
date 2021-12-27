@@ -21,6 +21,10 @@ export class Itemref {
     }
     return item
   }
+
+  toXmlString(): string {
+    return `<${Itemref.elementName} idref="${this.idref}"/>`
+  }
 }
 
 export default class Spine {
@@ -56,5 +60,16 @@ export default class Spine {
       console.error(error)
     }
     return spine
+  }
+
+  toXmlString(): string {
+    let xmlString = `<${Spine.elementName}>\n`
+    this.items.forEach(item => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
+    xmlString += `</${Spine.elementName}>`
+    return xmlString
   }
 }

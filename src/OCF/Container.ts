@@ -45,4 +45,15 @@ export default class Container {
     }
     return container
   }
+
+  toXmlString(): string {
+    return `
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
+  <rootfiles>
+    <rootfile full-path="content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>
+    `
+  }
 }

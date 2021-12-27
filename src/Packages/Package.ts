@@ -69,4 +69,10 @@ export default class Package {
     }
     return epubPackage
   }
+
+  toXmlString(): string {
+    const metadataString = this.metadata.toXmlString()
+    console.log(metadataString)
+    return ''
+  }
 }
