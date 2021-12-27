@@ -80,4 +80,25 @@ export default class Metadata {
       return metadata
     }
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Metadata.elementName}>\n`
+    this.identifiers.forEach(item => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
+    this.titles.forEach(item => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
+    this.languages.forEach(item => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
+    xmlString += `</${Metadata.elementName}>`
+    return xmlString
+  }
 }

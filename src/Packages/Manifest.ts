@@ -61,6 +61,10 @@ export class ManifestItem {
     }
     return item
   }
+
+  toXmlString(): string {
+    return `<${ManifestItem.elementName} id="${this.id}" media-type="${this.mediaType}" href="${this.href}"/>`
+  }
 }
 
 export default class Manifest {
@@ -91,5 +95,16 @@ export default class Manifest {
       console.error(error)
     }
     return null
+  }
+
+  toXmlString(): string {
+    let xmlString = `<${Manifest.elementName}>\n`
+    this.items.forEach(item => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
+    xmlString += `</${Manifest.elementName}>`
+    return xmlString
   }
 }

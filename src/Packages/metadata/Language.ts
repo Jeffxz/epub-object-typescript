@@ -11,4 +11,13 @@ export default class Language extends BasicElement {
     }
     return new Language(text)
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Language.elementName}`
+    if (this.id) {
+      xmlString += ` id="${this.id}`
+    }
+    xmlString += `>${this.contentText}</${Language.elementName}>`
+    return xmlString
+  }
 }
