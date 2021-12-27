@@ -34,4 +34,10 @@ export default class Meta extends BasicElement {
     }
     return meta
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Meta.elementName} property="${this.property}"`
+    xmlString += `>${this.contentText}</${Meta.elementName}>`
+    return xmlString
+  }
 }
