@@ -98,6 +98,11 @@ export default class Metadata {
       xmlString += item.toXmlString()
       xmlString += '\n'
     })
+    this.meta.forEach(item => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
     xmlString += `</${Metadata.elementName}>`
     return xmlString
   }
