@@ -8,6 +8,8 @@ import { DIR } from './Types'
 import * as XML from 'xmldoc'
 
 export default class Package {
+  static elementName = 'package'
+
   static PREFIX_DCTERMS = 'http://purl.org/dc/terms/'
   static PREFIX_OPF = 'http://www.idpf.org/2007/opf'
   static PREFIX_RENDITION = 'http://www.idpf.org/vocab/rendition/#'
@@ -71,8 +73,16 @@ export default class Package {
   }
 
   toXmlString(): string {
-    const metadataString = this.metadata.toXmlString()
-    console.log(metadataString)
-    return ''
+    let packageString = `<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<${Package.elementName} xmlns="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" version="${this.version}" xml:lang="en" unique-identifier="${this.uniqueIdentifier}">
+`
+    packageString += this.metadata.toXmlString()
+    packageString += '\n'
+    packageString += this.manifest.toXmlString()
+    packageString += '\n'
+    packageString += this.spine.toXmlString()
+    packageString += '\n'
+    packageString += `</${Package.elementName}>`
+    return packageString
   }
 }

@@ -4,7 +4,7 @@ import * as XML from 'xmldoc'
 // https://www.w3.org/publishing/epub3/epub-ocf.html#sec-container-metainf-container.xml
 // https://www.w3.org/publishing/epub3/epub-ocf.html#app-schema-container
 export default class Container {
-  name = 'container'
+  elementName = 'container'
   version = '1.0'
   xmlns = 'urn:oasis:names:tc:opendocument:xmlns:container'
   rootfiles: Rootfile[]
@@ -47,13 +47,15 @@ export default class Container {
   }
 
   toXmlString(): string {
-    return `
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">
-  <rootfiles>
-    <rootfile full-path="content.opf" media-type="application/oebps-package+xml"/>
-  </rootfiles>
-</container>
-    `
+    let containerString =  `<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">\n\t<rootfiles>
+  `
+    this.rootfiles.forEach(item => {
+      containerString += '\t\t'
+      containerString += item.toXmlString()
+      containerString += '\n'
+    })
+    containerString += `\t</rootfiles>\n</container>`
+    return containerString
   }
 }
