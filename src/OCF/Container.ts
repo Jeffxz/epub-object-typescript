@@ -8,6 +8,7 @@ export default class Container {
   version = '1.0'
   xmlns = 'urn:oasis:names:tc:opendocument:xmlns:container'
   rootfiles: Rootfile[]
+
   // links?
 
   constructor(opfPaths: string[]) {
@@ -47,10 +48,10 @@ export default class Container {
   }
 
   toXmlString(): string {
-    let containerString =  `<?xml version="1.0" encoding="utf-8" standalone="no"?>
+    let containerString = `<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0">\n\t<rootfiles>
   `
-    this.rootfiles.forEach(item => {
+    this.rootfiles.forEach((item) => {
       containerString += '\t\t'
       containerString += item.toXmlString()
       containerString += '\n'

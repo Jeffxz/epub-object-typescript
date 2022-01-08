@@ -84,7 +84,7 @@ export default class Epub {
   }
 
   title(): string {
-    return this.epubPackage.metadata.titles[0].contentText!
+    return this.epubPackage.metadata.titles[0].contentText || ''
   }
 
   languages(): Language[] {
@@ -92,7 +92,7 @@ export default class Epub {
   }
 
   language(): string {
-    return this.epubPackage.metadata.languages[0].contentText!
+    return this.epubPackage.metadata.languages[0].contentText || 'en'
   }
 
   readingDirection(): DIR {

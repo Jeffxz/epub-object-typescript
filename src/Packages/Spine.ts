@@ -64,7 +64,7 @@ export default class Spine {
 
   toXmlString(): string {
     let xmlString = `<${Spine.elementName}>\n`
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       xmlString += '\t'
       xmlString += item.toXmlString()
       xmlString += '\n'
