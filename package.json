@@ -7,14 +7,23 @@
   "files": [
     "dist"
   ],
-  "repository": "https://github.com/Jeffxz/epub-object-ts.git",
-  "author": "Zheng Xu",
+  "keywords": [
+    "epub",
+    "typescript"
+  ],
+  "repository": "https://github.com/gardenia-corp/epub-object-ts.git",
+  "homepage": "https://github.com/gardenia-corp/epub-object-ts",
+  "bugs": {
+    "url": "https://github.com/gardenia-corp/epub-object-ts/issues"
+  },
+  "author": "Zheng Xu <zxu@gardenia-corp.com> (https://github.com/Jeffxz)",
   "license": "MIT",
   "scripts": {
     "build": "webpack && cp ./dist/epub-object.bundle.* ./examples/browser-example/",
-    "compile": "tsc",
+    "compile": "tsc -p .",
     "lint": "eslint --ext .ts,.tsx,.js --no-eslintrc -c ./eslint.js index.ts src/",
-    "test": "jest"
+    "test": "jest",
+    "refresh": "rm -rf ./node_modules ./dist ./yarn.lock && yarn"
   },
   "type": "commonjs",
   "devDependencies": {

@@ -99,7 +99,7 @@ export default class Manifest {
 
   toXmlString(): string {
     let xmlString = `<${Manifest.elementName}>\n`
-    this.items.forEach(item => {
+    this.items.forEach((item) => {
       xmlString += '\t'
       xmlString += item.toXmlString()
       xmlString += '\n'
