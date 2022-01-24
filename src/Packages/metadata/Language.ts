@@ -1,8 +1,9 @@
 import BasicElement from './BasicElement'
 import { XmlElement } from 'xmldoc'
+import { DC_LANGUAGE } from '../constants/DCMI'
 
 export default class Language extends BasicElement {
-  static elementName = 'dc:language'
+  static elementName = DC_LANGUAGE
 
   static loadFromXMLElement(element: XmlElement): Language | null {
     const text = element.firstChild?.toString()

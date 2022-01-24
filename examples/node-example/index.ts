@@ -39,6 +39,15 @@ if (options.file) {
             }).then(() => {
               if (epub) {
                 console.log(JSON.stringify(epub, null, 2))
+                if (epub._nav) {
+                  console.log(`found nav file ${JSON.stringify(epub._nav)}`)
+                }
+                if (epub._coverImage) {
+                  console.log(`found cover image file ${JSON.stringify(epub._coverImage)}`)
+                }
+                if (epub._a11yLevel) {
+                  console.log(`found a11y level ${epub._a11yLevel}`)
+                }
               }
             }).catch((error) => {
               throw error

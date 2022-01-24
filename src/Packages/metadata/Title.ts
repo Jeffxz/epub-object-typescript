@@ -1,9 +1,10 @@
 import BasicElement from './BasicElement'
 import { DIR } from '../Types'
 import { XmlElement } from 'xmldoc'
+import { DC_TITLE } from '../constants/DCMI'
 
 export default class Title extends BasicElement {
-  static elementName = 'dc:title'
+  static elementName = DC_TITLE
   dir?: DIR
   xmlLang?: string
 

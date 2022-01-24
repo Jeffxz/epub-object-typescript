@@ -1,5 +1,6 @@
 import BasicElement from './BasicElement'
+import { DC_SOURCE } from '../constants/DCMI'
 
 export default class Source extends BasicElement {
-  name = 'dc:format'
+  static elementName = DC_SOURCE
 }

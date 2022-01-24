@@ -1,8 +1,9 @@
 import BasicElement from './BasicElement'
 import { XmlElement } from 'xmldoc'
+import { DC_IDENTIFIER } from '../constants/DCMI'
 
 export default class Identifier extends BasicElement {
-  static elementName = 'dc:identifier'
+  static elementName = DC_IDENTIFIER
 
   constructor(content: string, id?: string) {
     super(content)
