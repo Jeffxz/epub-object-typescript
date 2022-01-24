@@ -10,6 +10,7 @@ import {
 } from './metadata'
 import Spine, { Itemref } from './Spine'
 import { DIR } from './Types'
+import Ncx from './ncx/Ncx'
 
 export {
   Package,
@@ -24,4 +25,5 @@ export {
   Spine,
   Itemref,
   DIR,
+  Ncx,
 }
