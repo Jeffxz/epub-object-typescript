@@ -32,6 +32,7 @@ export default class Spine {
 
   id?: string
   pageProgressionDirection: DIR
+  toc?: string
 
   items: Itemref[]
 
@@ -55,6 +56,10 @@ export default class Spine {
       const direction = element.attr['page-progression-direction']
       spine.pageProgressionDirection =
         direction && direction == 'rtl' ? DIR.RTL : DIR.LTR
+      const toc = element.attr.toc
+      if (toc) {
+        spine.toc = toc
+      }
       return spine
     } catch (error) {
       console.error(error)

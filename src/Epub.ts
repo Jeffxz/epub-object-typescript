@@ -39,6 +39,7 @@ export default class Epub {
   _nav: ManifestItem | null = null
   _coverImage: ManifestItem | null = null
   _a11yLevel: WCAG_LEVEL | null = null
+  _toc: ManifestItem | null = null
 
   constructor(ocf: Ocf, epubPackage: Package) {
     this.ocf = ocf
@@ -57,12 +58,18 @@ export default class Epub {
       }
     }
 
+    const tocId = this.epubPackage.spine.toc
     for (const resourceItem of this.epubPackage.manifest.items) {
       if (resourceItem.isNav()) {
         this._nav = resourceItem
       }
       if (resourceItem.isCoverImage()) {
         this._coverImage = resourceItem
+      }
+      if (tocId) {
+        if (resourceItem.id == tocId) {
+          this._toc = resourceItem
+        }
       }
     }
 
