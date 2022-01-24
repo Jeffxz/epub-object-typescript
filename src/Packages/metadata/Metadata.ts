@@ -11,8 +11,8 @@ export default class Metadata {
   titles: Title[] // 1 or more
   languages: Language[] // 1 or more
   optional?: [] // 0 or more
-  meta: Meta[] // 1 or more
-  link?: Link[] // 0 or more
+  metaList: Meta[] // 1 or more
+  linkList: Link[] // 0 or more
 
   constructor(
     identifiers: Identifier[],
@@ -23,7 +23,8 @@ export default class Metadata {
     this.identifiers = identifiers
     this.titles = titles
     this.languages = languages
-    this.meta = meta
+    this.metaList = meta
+    this.linkList = []
   }
 
   static loadFromXMLElement(element: XmlElement): Metadata | null {
@@ -74,6 +75,14 @@ export default class Metadata {
         metas.push(meta)
       }
       metadata = new Metadata(identifiers, titles, languages, metas)
+
+      const linkNodes = element.childrenNamed(Link.elementName)
+      for (const node of linkNodes) {
+        const link = Link.loadFromXMLElement(node)
+        if (link) {
+          metadata.linkList.push(link)
+        }
+      }
     } catch (error) {
       console.error(error)
     } finally {
@@ -98,7 +107,7 @@ export default class Metadata {
       xmlString += item.toXmlString()
       xmlString += '\n'
     })
-    this.meta.forEach((item) => {
+    this.metaList.forEach((item) => {
       xmlString += '\t'
       xmlString += item.toXmlString()
       xmlString += '\n'

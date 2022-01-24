@@ -1,4 +1,9 @@
 import { XmlElement } from 'xmldoc'
+import {
+  MANIFEST_PROPERTY_COVER_IMAGE,
+  MANIFEST_PROPERTY_MATHML,
+  MANIFEST_PROPERTY_NAV,
+} from './constants/EpubConstants'
 
 export const CoreMediaTypes: string[] = [
   'image/gif',
@@ -45,6 +50,33 @@ export class ManifestItem {
 
   isCoreMedia(): boolean {
     return CoreMediaTypes.indexOf(this.mediaType) > -1
+  }
+
+  isMathML(): boolean {
+    if (this.properties && this.properties.includes(MANIFEST_PROPERTY_MATHML)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  isNav(): boolean {
+    if (this.properties && this.properties.includes(MANIFEST_PROPERTY_NAV)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  isCoverImage(): boolean {
+    if (
+      this.properties &&
+      this.properties.includes(MANIFEST_PROPERTY_COVER_IMAGE)
+    ) {
+      return true
+    } else {
+      return false
+    }
   }
 
   static loadFromXMLElement(element: XmlElement): ManifestItem | null {

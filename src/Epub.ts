@@ -8,16 +8,26 @@ import {
 } from './Packages'
 import { Ocf } from './OCF'
 import { RENDITIONSPREAD } from './Packages/Types'
+import { DCTERMS_CONFORMS_TO } from './Packages/constants/DCMI'
+import {
+  A11Y_CONFORM_TO_IRI_A,
+  A11Y_CONFORM_TO_IRI_AA,
+  A11Y_CONFORM_TO_IRI_AAA,
+} from './Packages/constants/EpubConstants'
 
 export class ReadingOrderItem {
   spineItem: Itemref
   resourceItem: ManifestItem
+  hasMathML = false
 
   constructor(spineItem: Itemref, resourceItem: ManifestItem) {
     this.spineItem = spineItem
     this.resourceItem = resourceItem
+    this.hasMathML = resourceItem.isMathML()
   }
 }
+
+type WCAG_LEVEL = 'a' | 'aa' | 'aaa'
 
 export default class Epub {
   epubPackage: Package
@@ -26,6 +36,9 @@ export default class Epub {
   _readingOrderList: ReadingOrderItem[]
   _isFixedLayout: boolean
   _spreadMode: RENDITIONSPREAD | null = null
+  _nav: ManifestItem | null = null
+  _coverImage: ManifestItem | null = null
+  _a11yLevel: WCAG_LEVEL | null = null
 
   constructor(ocf: Ocf, epubPackage: Package) {
     this.ocf = ocf
@@ -44,16 +57,22 @@ export default class Epub {
       }
     }
 
+    for (const resourceItem of this.epubPackage.manifest.items) {
+      if (resourceItem.isNav()) {
+        this._nav = resourceItem
+      }
+      if (resourceItem.isCoverImage()) {
+        this._coverImage = resourceItem
+      }
+    }
+
     this._isFixedLayout = false
-    for (const meta of this.epubPackage.metadata.meta) {
+    for (const meta of this.epubPackage.metadata.metaList) {
       if (meta.property && meta.property == 'rendition:layout') {
         if (meta.contentText == 'pre-paginated') {
           this._isFixedLayout = true
         }
       }
-    }
-
-    for (const meta of this.epubPackage.metadata.meta) {
       if (meta.property && meta.property == 'rendition:spread') {
         switch (meta.contentText) {
           case 'none': {
@@ -74,6 +93,20 @@ export default class Epub {
           default: {
             this._spreadMode = null
           }
+        }
+      }
+    }
+
+    for (const link of this.epubPackage.metadata.linkList) {
+      if (link.rel == DCTERMS_CONFORMS_TO) {
+        if (link.href == A11Y_CONFORM_TO_IRI_A) {
+          this._a11yLevel = 'a'
+        }
+        if (link.href == A11Y_CONFORM_TO_IRI_AA) {
+          this._a11yLevel = 'aa'
+        }
+        if (link.href == A11Y_CONFORM_TO_IRI_AAA) {
+          this._a11yLevel = 'aaa'
         }
       }
     }
