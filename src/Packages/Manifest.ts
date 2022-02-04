@@ -91,6 +91,9 @@ export class ManifestItem {
     if (properties && item) {
       item.setProperties(properties.split(' '))
     }
+    if (element.attr['media-overlay'] && item) {
+      item.mediaOverlay = element.attr['media-overlay']
+    }
     return item
   }
 
