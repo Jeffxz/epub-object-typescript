@@ -13,6 +13,7 @@ import {
   Spine,
   Itemref,
   DIR,
+  Ncx,
 } from './src/Packages'
 
 export {
@@ -33,4 +34,5 @@ export {
   Spine,
   Itemref,
   DIR,
+  Ncx
 }
