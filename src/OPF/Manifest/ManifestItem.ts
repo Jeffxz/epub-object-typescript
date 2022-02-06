@@ -1,4 +1,3 @@
-import { MANIFEST_PROPERTY_COVER_IMAGE } from '../constants/EpubConstants'
 import { XmlElement } from 'xmldoc'
 
 export default class ManifestItem {
