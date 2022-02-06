@@ -21,7 +21,7 @@ if (epubPath) {
           }
         }).then(ocf => {
           if (ocf) {
-            zip.files[ocf.container?.defaultRendition().fullPath].async('string').then(xmlString => {
+            zip.files[ocf.container?.rootfiles[0].fullPath].async('string').then(xmlString => {
               epubPackage = epubObject.Package.loadFromXML(xmlString)
               if (epubPackage) {
                 epub = new epubObject.Epub(ocf, epubPackage);

@@ -3,7 +3,8 @@ import * as fs from 'fs'
 import * as path from 'path'
 import * as JSZip from 'jszip'
 import { Container, Epub, Ocf, Package } from '../../index'
-import { Ncx } from '../../src/Packages'
+import Ncx from '../../src/NCX/Ncx'
+import EpubHelper from '../../src/EpubHelper';
 
 const program = new Command()
 program.option('-f, --file <epub>', 'convert a single epub file')
@@ -36,7 +37,7 @@ if (options.file) {
           })
           .then((ocf) => {
             if (ocf) {
-              zip.files[ocf.container?.defaultRendition().fullPath]
+              zip.files[ocf.container?.rootfiles[0].fullPath]
                 .async('string')
                 .then((xmlString) => {
                   epubPackage = Package.loadFromXML(xmlString)
@@ -46,33 +47,34 @@ if (options.file) {
                 })
                 .then(() => {
                   if (epub) {
+                    const epubHelper = new EpubHelper(epub)
                     // console.log(JSON.stringify(epub, null, 2))
-                    if (epub._nav) {
-                      console.log(`found nav file ${JSON.stringify(epub._nav)}`)
+                    if (epubHelper.nav) {
+                      console.log(`===> found nav file ${JSON.stringify(epubHelper.nav)}`)
                     }
-                    if (epub._toc && epub._toc.href) {
-                      console.log(`found toc file ${epub._toc.href}`)
+                    if (epubHelper.toc && epubHelper.toc.href) {
+                      console.log(`===> found toc file ${epubHelper.toc.href}`)
                       const opfFolderPath = path.dirname(
-                        ocf.container?.defaultRendition().fullPath
+                        ocf.container?.rootfiles[0].fullPath
                       )
-                      const tocPath = path.join(opfFolderPath, epub._toc.href)
+                      const tocPath = path.join(opfFolderPath, epubHelper.toc.href)
                       zip.files[tocPath].async('string').then((xmlString) => {
                         const ncx = Ncx.loadFromXML(xmlString)
-                        console.log(JSON.stringify(ncx?.navMap))
+                        console.log(`===> found page list ${JSON.stringify(ncx?.navMap)}`)
                         if (ncx?.pageList) {
                           console.log(JSON.stringify(ncx.pageList))
                         }
                       })
                     }
-                    if (epub._coverImage) {
+                    if (epubHelper.coverImage) {
                       console.log(
-                        `found cover image file ${JSON.stringify(
-                          epub._coverImage
+                        `===> found cover image file ${JSON.stringify(
+                            epubHelper.coverImage
                         )}`
                       )
                     }
-                    if (epub._a11yLevel) {
-                      console.log(`found a11y level ${epub._a11yLevel}`)
+                    if (epubHelper.a11yLevel) {
+                      console.log(`===> found a11y level ${epubHelper.a11yLevel}`)
                     }
                   }
                 })

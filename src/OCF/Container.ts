@@ -19,10 +19,6 @@ export default class Container {
     })
   }
 
-  defaultRendition(): Rootfile {
-    return this.rootfiles[0]
-  }
-
   static loadFromXML(xmlString: string): Container | null {
     let container: Container | null = null
     const document = new XML.XmlDocument(xmlString)
