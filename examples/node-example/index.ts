@@ -47,8 +47,8 @@ if (options.file) {
                 })
                 .then(() => {
                   if (epub) {
+                    console.log(JSON.stringify(epub, null, 2))
                     const epubHelper = new EpubHelper(epub)
-                    // console.log(JSON.stringify(epub, null, 2))
                     if (epubHelper.nav) {
                       console.log(`===> found nav file ${JSON.stringify(epubHelper.nav)}`)
                     }

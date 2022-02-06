@@ -24,10 +24,12 @@ export default class Container {
     const document = new XML.XmlDocument(xmlString)
     const rootfiles = document.childNamed('rootfiles')
     if (rootfiles == null) {
+      console.error('Could not find rootfiles')
       return container
     }
     const rootfile = rootfiles?.childrenNamed('rootfile')
     if (rootfile.length == 0) {
+      console.error('Could not find rootfile inside rootfiles')
       return container
     }
     const opfPathList: string[] = []
