@@ -2,7 +2,7 @@ import { Command } from 'commander'
 import * as fs from 'fs'
 import * as path from 'path'
 import * as JSZip from 'jszip'
-import { Container, Epub, Ocf, Package } from '../../index'
+import { Container, Epub, Ocf, Package, PageMap } from '../../index'
 import Ncx from '../../src/NCX/Ncx'
 import EpubHelper from '../../src/EpubHelper';
 
@@ -52,11 +52,11 @@ if (options.file) {
                     if (epubHelper.nav) {
                       console.log(`===> found nav file ${JSON.stringify(epubHelper.nav)}`)
                     }
+                    const opfFolderPath = path.dirname(
+                        ocf.container?.rootfiles[0].fullPath
+                    )
                     if (epubHelper.toc && epubHelper.toc.href) {
                       console.log(`===> found toc file ${epubHelper.toc.href}`)
-                      const opfFolderPath = path.dirname(
-                        ocf.container?.rootfiles[0].fullPath
-                      )
                       const tocPath = path.join(opfFolderPath, epubHelper.toc.href)
                       zip.files[tocPath].async('string').then((xmlString) => {
                         const ncx = Ncx.loadFromXML(xmlString)
@@ -64,6 +64,13 @@ if (options.file) {
                         if (ncx?.pageList) {
                           console.log(JSON.stringify(ncx.pageList))
                         }
+                      })
+                    }
+                    if (epubHelper.pageMap && epubHelper.pageMap.href) {
+                      const pageMapPath = path.join(opfFolderPath, epubHelper.pageMap.href)
+                      zip.files[pageMapPath].async('string').then((xmlString) => {
+                        const pageMap = PageMap.loadFromXML(xmlString)
+                        console.log(`===> found page map ${JSON.stringify(pageMap)}`)
                       })
                     }
                     if (epubHelper.coverImage) {

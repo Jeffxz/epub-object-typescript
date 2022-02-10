@@ -21,6 +21,7 @@ import PageList from './src/NCX/PageList'
 import PageTarget from './src/NCX/PageTarget'
 
 import EpubHelper, { ReadingOrderItem } from './src/EpubHelper'
+import { PageMap, Page } from './src/Adobe/PageMap'
 
 export {
   EpubHelper,
@@ -47,4 +48,6 @@ export {
   NavPoint,
   PageList,
   PageTarget,
+  PageMap,
+  Page
 }

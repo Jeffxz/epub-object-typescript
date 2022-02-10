@@ -44,6 +44,7 @@ export default class EpubHelper {
   coverImage: ManifestItem | null = null
   a11yLevel: WCAG_LEVEL | null = null
   toc: ManifestItem | null = null
+  pageMap: ManifestItem | null = null
 
   constructor(epub: Epub) {
     this.epub = epub
@@ -61,6 +62,7 @@ export default class EpubHelper {
     }
 
     const tocId = epub.epubPackage.spine.toc
+    const pageMapId = epub.epubPackage.spine.pageMap
     for (const resourceItem of epub.epubPackage.manifest.items) {
       if (
         resourceItem.properties &&
@@ -77,6 +79,11 @@ export default class EpubHelper {
       if (tocId) {
         if (resourceItem.id == tocId) {
           this.toc = resourceItem
+        }
+      }
+      if (pageMapId) {
+        if (resourceItem.id == pageMapId) {
+          this.pageMap = resourceItem
         }
       }
     }
