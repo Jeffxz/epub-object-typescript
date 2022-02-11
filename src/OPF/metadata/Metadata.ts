@@ -4,6 +4,7 @@ import Language from './Language'
 import Meta from './Meta'
 import Link from './Link'
 import { XmlElement } from 'xmldoc'
+import Creator from './Creator'
 
 export default class Metadata {
   static elementName = 'metadata'
@@ -13,6 +14,7 @@ export default class Metadata {
   optional?: [] // 0 or more
   metaList: Meta[] // 1 or more
   linkList: Link[] // 0 or more
+  creatorList: Creator[] // 0 or more
 
   constructor(
     identifiers: Identifier[],
@@ -25,6 +27,7 @@ export default class Metadata {
     this.languages = languages
     this.metaList = meta
     this.linkList = []
+    this.creatorList = []
   }
 
   static loadFromXMLElement(element: XmlElement): Metadata | null {
@@ -63,6 +66,14 @@ export default class Metadata {
         }
         languages.push(language)
       }
+      const creatorNodes = element.childrenNamed(Creator.elementName)
+      const creators: Creator[] = []
+      for (const node of creatorNodes) {
+        const creator = Creator.loadFromXMLElement(node)
+        if (creator != null) {
+          creators.push(creator)
+        }
+      }
       const metas: Meta[] = []
       const metaNodes = element.childrenNamed(Meta.elementName)
       for (const node of metaNodes) {
@@ -75,6 +86,7 @@ export default class Metadata {
         metas.push(meta)
       }
       metadata = new Metadata(identifiers, titles, languages, metas)
+      metadata.creatorList = creators
 
       const linkNodes = element.childrenNamed(Link.elementName)
       for (const node of linkNodes) {

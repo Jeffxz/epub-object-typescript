@@ -5,6 +5,7 @@ import Rootfile from './src/OCF/Rootfile'
 import Package from './src/OPF/Package'
 import Manifest from './src/OPF/Manifest/Manifest'
 import ManifestItem from './src/OPF/Manifest/ManifestItem'
+import Creator from './src/OPF/metadata/Creator'
 import Metadata from './src/OPF/metadata/Metadata'
 import Identifier from './src/OPF/metadata/Identifier'
 import Title from './src/OPF/metadata/Title'
@@ -23,6 +24,9 @@ import PageTarget from './src/NCX/PageTarget'
 import EpubHelper, { ReadingOrderItem } from './src/EpubHelper'
 import { PageMap, Page } from './src/Adobe/PageMap'
 
+
+import * as Constants from './src/constants'
+
 export {
   EpubHelper,
   Epub,
@@ -37,6 +41,7 @@ export {
   Identifier,
   Title,
   Language,
+  Creator,
   Meta,
   BasicElement,
   Spine,
@@ -49,5 +54,6 @@ export {
   PageList,
   PageTarget,
   PageMap,
-  Page
+  Page,
+  Constants
 }

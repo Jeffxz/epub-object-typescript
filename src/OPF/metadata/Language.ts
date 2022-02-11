@@ -1,6 +1,6 @@
 import BasicElement from './BasicElement'
 import { XmlElement } from 'xmldoc'
-import { DC_LANGUAGE } from '../constants/DCMI'
+import { DC_LANGUAGE } from '../../constants/DCMI'
 
 export default class Language extends BasicElement {
   static elementName = DC_LANGUAGE
