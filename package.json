@@ -19,8 +19,8 @@
   "author": "Zheng Xu <zxu@gardenia-corp.com> (https://github.com/Jeffxz)",
   "license": "MIT",
   "scripts": {
-    "build": "webpack && cp ./dist/epub-object.bundle.* ./examples/browser-example/",
-    "compile": "tsc -p .",
+    "build:browser": "webpack && cp ./dist/epub-object.bundle.* ./examples/browser-example/",
+    "build": "tsc -p .",
     "lint": "eslint --ext .ts,.tsx,.js --no-eslintrc -c ./eslint.js index.ts src/",
     "test": "jest",
     "refresh": "rm -rf ./node_modules ./dist ./yarn.lock && yarn"
