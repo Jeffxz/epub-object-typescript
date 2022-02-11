@@ -99,5 +99,5 @@ if (options.file) {
     console.error(error)
   }
 } else {
-  console.error('Usage: yarn load-epub-file -f <epub file path>')
+  console.error('Usage: yarn load -f <epub file path>')
 }
