@@ -1,11 +1,9 @@
 import Epub from './Epub'
-import { DIR } from './OPF/Types'
+import { DIR, RENDITION_ORIENTATION, RENDITION_SPREAD } from './OPF/Types'
 import { Itemref } from './OPF/Spine'
 import Language from './OPF/metadata/Language'
 import Title from './OPF/metadata/Title'
 import ManifestItem from './OPF/Manifest/ManifestItem'
-
-import { RENDITIONSPREAD } from './OPF/Types'
 import { DCTERMS_CONFORMS_TO } from './constants/DCMI'
 import {
   A11Y_CONFORM_TO_IRI_A,
@@ -14,6 +12,16 @@ import {
   MANIFEST_PROPERTY_COVER_IMAGE,
   MANIFEST_PROPERTY_MATHML,
   MANIFEST_PROPERTY_NAV,
+  META_RENDITION_LAYOUT_NAME,
+  META_RENDITION_LAYOUT_VALUE_FXL,
+  META_RENDITION_ORIENTATION_NAME,
+  META_RENDITION_ORIENTATION_VALUE_AUTO,
+  META_RENDITION_ORIENTATION_VALUE_LANDSCAPE,
+  META_RENDITION_ORIENTATION_VALUE_PORTRAIT,
+  META_RENDITION_SPREAD_NAME, META_RENDITION_SPREAD_VALUE_AUTO,
+  META_RENDITION_SPREAD_VALUE_LANDSCAPE,
+  META_RENDITION_SPREAD_VALUE_NONE,
+  META_RENDITION_SPREAD_VALUE_PORTRAIT,
 } from './constants/OPF'
 
 export class ReadingOrderItem {
@@ -39,7 +47,8 @@ export default class EpubHelper {
   epub: Epub
   readingOrderList: ReadingOrderItem[]
   isFixedLayout: boolean
-  spreadMode: RENDITIONSPREAD | null = null
+  renditionOrientation: RENDITION_ORIENTATION = RENDITION_ORIENTATION.AUTO
+  spreadMode: RENDITION_SPREAD | null = null
   nav: ManifestItem | null = null
   coverImage: ManifestItem | null = null
   a11yLevel: WCAG_LEVEL | null = null
@@ -90,31 +99,46 @@ export default class EpubHelper {
 
     this.isFixedLayout = false
     for (const meta of epub.epubPackage.metadata.metaList) {
-      if (meta.property && meta.property == 'rendition:layout') {
-        if (meta.contentText == 'pre-paginated') {
+      if (meta.property && meta.property == META_RENDITION_LAYOUT_NAME) {
+        if (meta.contentText == META_RENDITION_LAYOUT_VALUE_FXL) {
           this.isFixedLayout = true
         }
       }
-      if (meta.property && meta.property == 'rendition:spread') {
+      if (meta.property && meta.property == META_RENDITION_SPREAD_NAME) {
         switch (meta.contentText) {
-          case 'none': {
-            this.spreadMode = RENDITIONSPREAD.NONE
+          case META_RENDITION_SPREAD_VALUE_NONE: {
+            this.spreadMode = RENDITION_SPREAD.NONE
             break
           }
-          case 'landscape': {
-            this.spreadMode = RENDITIONSPREAD.LANDSCAPE
+          case META_RENDITION_SPREAD_VALUE_LANDSCAPE: {
+            this.spreadMode = RENDITION_SPREAD.LANDSCAPE
             break
           }
-          case 'portrait': {
-            this.spreadMode = RENDITIONSPREAD.PORTRAIT
+          case META_RENDITION_SPREAD_VALUE_PORTRAIT: {
+            this.spreadMode = RENDITION_SPREAD.PORTRAIT
             break
           }
-          case 'auto': {
-            this.spreadMode = RENDITIONSPREAD.AUTO
+          case META_RENDITION_SPREAD_VALUE_AUTO: {
+            this.spreadMode = RENDITION_SPREAD.AUTO
           }
           default: {
             this.spreadMode = null
           }
+        }
+      }
+      if (meta.property && meta.property == META_RENDITION_ORIENTATION_NAME) {
+        switch (meta.contentText) {
+          case META_RENDITION_ORIENTATION_VALUE_AUTO:
+            this.renditionOrientation = RENDITION_ORIENTATION.AUTO
+            break
+          case META_RENDITION_ORIENTATION_VALUE_LANDSCAPE:
+            this.renditionOrientation = RENDITION_ORIENTATION.LANDSCAPE
+            break
+          case META_RENDITION_ORIENTATION_VALUE_PORTRAIT:
+            this.renditionOrientation = RENDITION_ORIENTATION.PORTRAIT
+            break
+          default:
+            break
         }
       }
     }
