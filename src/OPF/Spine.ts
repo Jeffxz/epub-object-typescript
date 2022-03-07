@@ -33,7 +33,7 @@ export default class Spine {
   id?: string
   pageProgressionDirection: DIR
   toc?: string
-
+  pageMap?: string
   items: Itemref[]
 
   constructor(items: Itemref[]) {
@@ -59,6 +59,10 @@ export default class Spine {
       const toc = element.attr.toc
       if (toc) {
         spine.toc = toc
+      }
+      const pageMap = element.attr['page-map']
+      if (pageMap) {
+        spine.pageMap = pageMap
       }
       return spine
     } catch (error) {

@@ -6,7 +6,7 @@ import Title from './OPF/metadata/Title'
 import ManifestItem from './OPF/Manifest/ManifestItem'
 
 import { RENDITIONSPREAD } from './OPF/Types'
-import { DCTERMS_CONFORMS_TO } from './OPF/constants/DCMI'
+import { DCTERMS_CONFORMS_TO } from './constants/DCMI'
 import {
   A11Y_CONFORM_TO_IRI_A,
   A11Y_CONFORM_TO_IRI_AA,
@@ -14,7 +14,7 @@ import {
   MANIFEST_PROPERTY_COVER_IMAGE,
   MANIFEST_PROPERTY_MATHML,
   MANIFEST_PROPERTY_NAV,
-} from './OPF/constants/EpubConstants'
+} from './constants/OPF'
 
 export class ReadingOrderItem {
   spineItem: Itemref
@@ -44,6 +44,7 @@ export default class EpubHelper {
   coverImage: ManifestItem | null = null
   a11yLevel: WCAG_LEVEL | null = null
   toc: ManifestItem | null = null
+  pageMap: ManifestItem | null = null
 
   constructor(epub: Epub) {
     this.epub = epub
@@ -61,6 +62,7 @@ export default class EpubHelper {
     }
 
     const tocId = epub.epubPackage.spine.toc
+    const pageMapId = epub.epubPackage.spine.pageMap
     for (const resourceItem of epub.epubPackage.manifest.items) {
       if (
         resourceItem.properties &&
@@ -77,6 +79,11 @@ export default class EpubHelper {
       if (tocId) {
         if (resourceItem.id == tocId) {
           this.toc = resourceItem
+        }
+      }
+      if (pageMapId) {
+        if (resourceItem.id == pageMapId) {
+          this.pageMap = resourceItem
         }
       }
     }

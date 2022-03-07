@@ -19,30 +19,32 @@ export default class Container {
     })
   }
 
-  defaultRendition(): Rootfile {
-    return this.rootfiles[0]
-  }
-
   static loadFromXML(xmlString: string): Container | null {
     let container: Container | null = null
-    const document = new XML.XmlDocument(xmlString)
-    const rootfiles = document.childNamed('rootfiles')
-    if (rootfiles == null) {
-      return container
-    }
-    const rootfile = rootfiles?.childrenNamed('rootfile')
-    if (rootfile.length == 0) {
-      return container
-    }
-    const opfPathList: string[] = []
-    for (const node of rootfile) {
-      if (node?.attr['full-path']) {
-        opfPathList.push(node?.attr['full-path'])
+    try {
+      const document = new XML.XmlDocument(xmlString)
+      const rootfiles = document.childNamed('rootfiles')
+      if (rootfiles == null) {
+        console.error('Could not find rootfiles')
+        return container
       }
-    }
+      const rootfile = rootfiles?.childrenNamed('rootfile')
+      if (rootfile.length == 0) {
+        console.error('Could not find rootfile inside rootfiles')
+        return container
+      }
+      const opfPathList: string[] = []
+      for (const node of rootfile) {
+        if (node?.attr['full-path']) {
+          opfPathList.push(node?.attr['full-path'])
+        }
+      }
 
-    if (opfPathList) {
-      container = new Container(opfPathList)
+      if (opfPathList) {
+        container = new Container(opfPathList)
+      }
+    } catch (error) {
+      console.error((error as Error).message)
     }
     return container
   }

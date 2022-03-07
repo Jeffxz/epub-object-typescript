@@ -1,4 +1,4 @@
-import { Container } from '../index'
+import Container from '../../OCF/Container'
 
 describe('Container', () => {
   it('should can parse rootfile', () => {
@@ -11,7 +11,6 @@ describe('Container', () => {
       '</container>'
     const container = Container.loadFromXML(xml)
     expect(container?.rootfiles.length).toEqual(1)
-    expect(container?.defaultRendition().fullPath).toEqual('OPS/package.opf')
   })
 
   it('should can return two rootfile and the first one is default rendition', () => {
@@ -25,7 +24,6 @@ describe('Container', () => {
       '</container>'
     const container = Container.loadFromXML(xml)
     expect(container?.rootfiles.length).toEqual(2)
-    expect(container?.defaultRendition().fullPath).toEqual('OPS/package.opf')
   })
 
   it('should return null if rootfile does not exist', () => {
