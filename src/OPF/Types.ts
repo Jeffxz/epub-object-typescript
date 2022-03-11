@@ -3,10 +3,16 @@ export enum DIR {
   RTL = 'rtl',
 }
 
-export enum RENDITIONSPREAD {
+export enum RENDITION_SPREAD {
   NONE = 'none',
   LANDSCAPE = 'langscape',
   PORTRAIT = 'portrait', // deprecated
   BOTH = 'both',
   AUTO = 'auto',
+}
+
+export enum RENDITION_ORIENTATION {
+  LANDSCAPE = 'langscape',
+  PORTRAIT = 'portrait',
+  AUTO = 'auto', // default
 }
