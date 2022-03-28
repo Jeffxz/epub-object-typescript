@@ -47,7 +47,6 @@ if (options.file) {
                 })
                 .then(() => {
                   if (epub) {
-                    console.log(JSON.stringify(epub, null, 2))
                     const epubHelper = new EpubHelper(epub)
                     if (epubHelper.nav) {
                       console.log(`===> found nav file ${JSON.stringify(epubHelper.nav)}`)
@@ -83,6 +82,7 @@ if (options.file) {
                     if (epubHelper.a11yLevel) {
                       console.log(`===> found a11y level ${epubHelper.a11yLevel}`)
                     }
+                    console.log(JSON.stringify(epubHelper.readingOrderList, null, 2))
                   }
                 })
                 .catch((error) => {
