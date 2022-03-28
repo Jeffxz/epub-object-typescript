@@ -1,5 +1,6 @@
 import { XmlElement } from 'xmldoc'
 import { DIR } from './Types'
+import { SPINE_PROGRESSION_DIRECTION } from '../constants'
 
 export class Itemref {
   static elementName = 'itemref'
@@ -7,7 +8,7 @@ export class Itemref {
   id?: string
   idref: string
   linear?: string
-  properties?: [string]
+  properties?: string[]
 
   constructor(idref: string) {
     this.idref = idref
@@ -18,6 +19,9 @@ export class Itemref {
     let item: Itemref | null = null
     if (idref) {
       item = new Itemref(idref)
+      if (element.attr.properties) {
+        item.properties = element.attr.properties.split(' ')
+      }
     }
     return item
   }
@@ -53,7 +57,7 @@ export default class Spine {
         }
       }
       spine = new Spine(items)
-      const direction = element.attr['page-progression-direction']
+      const direction = element.attr[SPINE_PROGRESSION_DIRECTION]
       spine.pageProgressionDirection =
         direction && direction == 'rtl' ? DIR.RTL : DIR.LTR
       const toc = element.attr.toc

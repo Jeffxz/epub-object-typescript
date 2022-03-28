@@ -1,5 +1,10 @@
 import Epub from './Epub'
-import { DIR, RENDITION_ORIENTATION, RENDITION_SPREAD } from './OPF/Types'
+import {
+  DIR,
+  RENDITION_ORIENTATION,
+  RENDITION_PAGE_SPREAD,
+  RENDITION_SPREAD,
+} from './OPF/Types'
 import { Itemref } from './OPF/Spine'
 import Language from './OPF/metadata/Language'
 import Title from './OPF/metadata/Title'
@@ -18,16 +23,38 @@ import {
   META_RENDITION_ORIENTATION_VALUE_AUTO,
   META_RENDITION_ORIENTATION_VALUE_LANDSCAPE,
   META_RENDITION_ORIENTATION_VALUE_PORTRAIT,
-  META_RENDITION_SPREAD_NAME, META_RENDITION_SPREAD_VALUE_AUTO,
+  META_RENDITION_SPREAD_NAME,
+  META_RENDITION_SPREAD_VALUE_AUTO,
   META_RENDITION_SPREAD_VALUE_LANDSCAPE,
   META_RENDITION_SPREAD_VALUE_NONE,
-  META_RENDITION_SPREAD_VALUE_PORTRAIT,
+  META_RENDITION_SPREAD_VALUE_PORTRAIT, SPINE_ITEM_PROPERTY_PAGE_SPREAD_LEFT, SPINE_ITEM_PROPERTY_PAGE_SPREAD_RIGHT,
+  SPINE_LAYOUT_OVERRIDES_VALUE_FXL,
+  SPINE_LAYOUT_OVERRIDES_VALUE_FXL_PREFIX,
+  SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE,
+  SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE_PREFIX,
+  SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO,
+  SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO_PREFIX,
+  SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE,
+  SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE_PREFIX,
+  SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT,
+  SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT_PREFIX,
+  SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_CENTER,
+  SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT,
+  SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT,
 } from './constants/OPF'
+
+export enum BookSubType {
+  'imageOnly',
+}
 
 export class ReadingOrderItem {
   spineItem: Itemref
   resourceItem: ManifestItem
   hasMathML = false
+  isFixedLayout = false
+  orientationOverride: RENDITION_ORIENTATION | null = null
+  syntheticSpreadOverride: RENDITION_SPREAD | null = null
+  pageSpread: RENDITION_PAGE_SPREAD | null = null
 
   constructor(spineItem: Itemref, resourceItem: ManifestItem) {
     this.spineItem = spineItem
@@ -47,6 +74,7 @@ export default class EpubHelper {
   epub: Epub
   readingOrderList: ReadingOrderItem[]
   isFixedLayout: boolean
+  bookSubType: BookSubType | null = null
   renditionOrientation: RENDITION_ORIENTATION = RENDITION_ORIENTATION.AUTO
   spreadMode: RENDITION_SPREAD | null = null
   nav: ManifestItem | null = null
@@ -62,9 +90,29 @@ export default class EpubHelper {
       const id = spineItem.idref
       for (const resourceItem of epub.epubPackage.manifest.items) {
         if (resourceItem.id == id) {
-          this.readingOrderList.push(
-            new ReadingOrderItem(spineItem, resourceItem)
-          )
+          const readingOrderItem = new ReadingOrderItem(spineItem, resourceItem)
+          if (spineItem.properties) {
+            if (spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_FXL) || spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_FXL_PREFIX)) {
+              readingOrderItem.isFixedLayout = true
+            } else if (spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE) || spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE_PREFIX)) {
+              readingOrderItem.isFixedLayout = false
+            }
+            if (spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO) || spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO_PREFIX)) {
+              readingOrderItem.orientationOverride = RENDITION_ORIENTATION.AUTO
+            } else if (spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE) || spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE_PREFIX)) {
+              readingOrderItem.orientationOverride = RENDITION_ORIENTATION.LANDSCAPE
+            } else if (spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT) || spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT_PREFIX)) {
+              readingOrderItem.orientationOverride = RENDITION_ORIENTATION.PORTRAIT
+            }
+            if (spineItem.properties.includes(SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_CENTER)) {
+              readingOrderItem.pageSpread = RENDITION_PAGE_SPREAD.CENTER
+            } else if (spineItem.properties.includes(SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT) || spineItem.properties.includes(SPINE_ITEM_PROPERTY_PAGE_SPREAD_LEFT)) {
+              readingOrderItem.pageSpread = RENDITION_PAGE_SPREAD.LEFT
+            } else if (spineItem.properties.includes(SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT) || spineItem.properties.includes(SPINE_ITEM_PROPERTY_PAGE_SPREAD_RIGHT)) {
+              readingOrderItem.pageSpread = RENDITION_PAGE_SPREAD.RIGHT
+            }
+          }
+          this.readingOrderList.push(readingOrderItem)
           break
         }
       }
