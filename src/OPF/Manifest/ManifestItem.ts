@@ -35,6 +35,14 @@ export default class ManifestItem {
   }
 
   toXmlString(): string {
-    return `<${ManifestItem.elementName} id="${this.id}" media-type="${this.mediaType}" href="${this.href}"/>`
+    let xmlStr = `<${ManifestItem.elementName} id="${this.id}"`
+    if (this.properties) {
+      xmlStr += ` properties="${this.properties.toString()}"`
+    }
+    if (this.fallback) {
+      xmlStr += ` fallback="${this.fallback}"`
+    }
+    xmlStr +=` media-type="${this.mediaType}" href="${this.href}"/>`
+    return xmlStr
   }
 }
