@@ -82,10 +82,17 @@ export default class EpubHelper {
   a11yLevel: WCAG_LEVEL | null = null
   toc: ManifestItem | null = null
   pageMap: ManifestItem | null = null
+  id: string
 
   constructor(epub: Epub) {
     this.epub = epub
     this.readingOrderList = []
+    this.id = epub.epubPackage.uniqueIdentifier
+    epub.epubPackage.metadata.identifiers.forEach(identifier => {
+      if (identifier.id === epub.epubPackage.uniqueIdentifier && identifier.contentText) {
+        this.id = identifier.contentText
+      }
+    })
     for (const spineItem of epub.epubPackage.spine.items) {
       const id = spineItem.idref
       for (const resourceItem of epub.epubPackage.manifest.items) {
