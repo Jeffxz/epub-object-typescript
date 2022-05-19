@@ -17,6 +17,10 @@ import {
   MANIFEST_PROPERTY_COVER_IMAGE,
   MANIFEST_PROPERTY_MATHML,
   MANIFEST_PROPERTY_NAV,
+  META_ACCESS_MODE, META_ACCESS_MODE_SUFFICIENT,
+  META_ACCESSIBILITY_FEATURE,
+  META_ACCESSIBILITY_HAZARD,
+  META_ACCESSIBILITY_SUMMARY,
   META_RENDITION_LAYOUT_NAME,
   META_RENDITION_LAYOUT_VALUE_FXL,
   META_RENDITION_ORIENTATION_NAME,
@@ -27,7 +31,9 @@ import {
   META_RENDITION_SPREAD_VALUE_AUTO,
   META_RENDITION_SPREAD_VALUE_LANDSCAPE,
   META_RENDITION_SPREAD_VALUE_NONE,
-  META_RENDITION_SPREAD_VALUE_PORTRAIT, SPINE_ITEM_PROPERTY_PAGE_SPREAD_LEFT, SPINE_ITEM_PROPERTY_PAGE_SPREAD_RIGHT,
+  META_RENDITION_SPREAD_VALUE_PORTRAIT,
+  SPINE_ITEM_PROPERTY_PAGE_SPREAD_LEFT,
+  SPINE_ITEM_PROPERTY_PAGE_SPREAD_RIGHT,
   SPINE_LAYOUT_OVERRIDES_VALUE_FXL,
   SPINE_LAYOUT_OVERRIDES_VALUE_FXL_PREFIX,
   SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE,
@@ -68,7 +74,16 @@ export class ReadingOrderItem {
   }
 }
 
-type WCAG_LEVEL = 'a' | 'aa' | 'aaa'
+export type WCAG_LEVEL = 'a' | 'aa' | 'aaa'
+
+export type A11yAttribute = {
+  wcagLevel?: string,
+  accessMode: string[],
+  accessibilityFeature: string[],
+  accessibilityHazard: string[],
+  accessibilitySummary: string[],
+  accessModeSufficient?: string[]
+}
 
 export default class EpubHelper {
   epub: Epub
@@ -79,7 +94,12 @@ export default class EpubHelper {
   spreadMode: RENDITION_SPREAD | null = null
   nav: ManifestItem | null = null
   coverImage: ManifestItem | null = null
-  a11yLevel: WCAG_LEVEL | null = null
+  a11yInfo: A11yAttribute = {
+    accessMode: [],
+    accessibilityFeature: [],
+    accessibilityHazard: [],
+    accessibilitySummary: []
+  }
   toc: ManifestItem | null = null
   pageMap: ManifestItem | null = null
   id: string
@@ -154,60 +174,100 @@ export default class EpubHelper {
 
     this.isFixedLayout = false
     for (const meta of epub.epubPackage.metadata.metaList) {
-      if (meta.property && meta.property == META_RENDITION_LAYOUT_NAME) {
-        if (meta.contentText == META_RENDITION_LAYOUT_VALUE_FXL) {
-          this.isFixedLayout = true
-        }
-      }
-      if (meta.property && meta.property == META_RENDITION_SPREAD_NAME) {
-        switch (meta.contentText) {
-          case META_RENDITION_SPREAD_VALUE_NONE: {
-            this.spreadMode = RENDITION_SPREAD.NONE
+      if (meta.property) {
+        switch (meta.property) {
+          case META_RENDITION_LAYOUT_NAME: {
+            if (meta.contentText == META_RENDITION_LAYOUT_VALUE_FXL) {
+              this.isFixedLayout = true
+            }
             break
           }
-          case META_RENDITION_SPREAD_VALUE_LANDSCAPE: {
-            this.spreadMode = RENDITION_SPREAD.LANDSCAPE
+          case META_RENDITION_SPREAD_NAME: {
+            switch (meta.contentText) {
+              case META_RENDITION_SPREAD_VALUE_NONE: {
+                this.spreadMode = RENDITION_SPREAD.NONE
+                break
+              }
+              case META_RENDITION_SPREAD_VALUE_LANDSCAPE: {
+                this.spreadMode = RENDITION_SPREAD.LANDSCAPE
+                break
+              }
+              case META_RENDITION_SPREAD_VALUE_PORTRAIT: {
+                this.spreadMode = RENDITION_SPREAD.PORTRAIT
+                break
+              }
+              case META_RENDITION_SPREAD_VALUE_AUTO: {
+                this.spreadMode = RENDITION_SPREAD.AUTO
+              }
+              default: {
+                this.spreadMode = null
+              }
+            }
             break
           }
-          case META_RENDITION_SPREAD_VALUE_PORTRAIT: {
-            this.spreadMode = RENDITION_SPREAD.PORTRAIT
+          case META_RENDITION_ORIENTATION_NAME: {
+            switch (meta.contentText) {
+              case META_RENDITION_ORIENTATION_VALUE_AUTO:
+                this.renditionOrientation = RENDITION_ORIENTATION.AUTO
+                break
+              case META_RENDITION_ORIENTATION_VALUE_LANDSCAPE:
+                this.renditionOrientation = RENDITION_ORIENTATION.LANDSCAPE
+                break
+              case META_RENDITION_ORIENTATION_VALUE_PORTRAIT:
+                this.renditionOrientation = RENDITION_ORIENTATION.PORTRAIT
+                break
+              default:
+                break
+            }
             break
           }
-          case META_RENDITION_SPREAD_VALUE_AUTO: {
-            this.spreadMode = RENDITION_SPREAD.AUTO
+          case META_ACCESS_MODE: {
+            if (meta.contentText) {
+              this.a11yInfo.accessMode.push(meta.contentText)
+            }
+            break
           }
-          default: {
-            this.spreadMode = null
+          case META_ACCESSIBILITY_FEATURE: {
+            if (meta.contentText) {
+              this.a11yInfo.accessibilityFeature.push(meta.contentText)
+            }
+            break
           }
-        }
-      }
-      if (meta.property && meta.property == META_RENDITION_ORIENTATION_NAME) {
-        switch (meta.contentText) {
-          case META_RENDITION_ORIENTATION_VALUE_AUTO:
-            this.renditionOrientation = RENDITION_ORIENTATION.AUTO
+          case META_ACCESSIBILITY_HAZARD: {
+            if (meta.contentText) {
+              this.a11yInfo.accessibilityHazard.push(meta.contentText)
+            }
             break
-          case META_RENDITION_ORIENTATION_VALUE_LANDSCAPE:
-            this.renditionOrientation = RENDITION_ORIENTATION.LANDSCAPE
+          }
+          case META_ACCESSIBILITY_SUMMARY: {
+            if (meta.contentText) {
+              this.a11yInfo.accessibilitySummary.push(meta.contentText)
+            }
             break
-          case META_RENDITION_ORIENTATION_VALUE_PORTRAIT:
-            this.renditionOrientation = RENDITION_ORIENTATION.PORTRAIT
+          }
+          case META_ACCESS_MODE_SUFFICIENT: {
+            if (meta.contentText) {
+              if (!this.a11yInfo.accessModeSufficient) {
+                this.a11yInfo.accessModeSufficient = []
+              }
+              this.a11yInfo.accessModeSufficient.push(meta.contentText)
+            }
             break
-          default:
-            break
+          }
         }
       }
     }
 
     for (const link of epub.epubPackage.metadata.linkList) {
-      if (link.rel == DCTERMS_CONFORMS_TO) {
+      if (link.rel === DCTERMS_CONFORMS_TO) {
         if (link.href == A11Y_CONFORM_TO_IRI_A) {
-          this.a11yLevel = 'a'
+          this.a11yInfo.wcagLevel = 'a'
         }
         if (link.href == A11Y_CONFORM_TO_IRI_AA) {
-          this.a11yLevel = 'aa'
+          this.a11yInfo.wcagLevel = 'aa'
         }
         if (link.href == A11Y_CONFORM_TO_IRI_AAA) {
-          this.a11yLevel = 'aaa'
+          this.a11yInfo.wcagLevel = 'aaa'
         }
       }
     }
