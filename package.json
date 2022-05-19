@@ -1,6 +1,6 @@
 {
   "name": "epub-object-ts",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Epub Object for typescript/javascript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
