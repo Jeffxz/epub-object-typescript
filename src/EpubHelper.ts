@@ -48,6 +48,11 @@ import {
   SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT,
   SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT,
 } from './constants/OPF'
+import Creator from './OPF/metadata/Creator'
+import Contributor from './OPF/metadata/Contributor'
+import Publisher from './OPF/metadata/Publisher'
+import Rights from './OPF/metadata/Rights'
+import Description from './OPF/metadata/Description'
 
 export enum BookSubType {
   'imageOnly',
@@ -103,11 +108,35 @@ export default class EpubHelper {
   toc: ManifestItem | null = null
   pageMap: ManifestItem | null = null
   id: string
+  creators: Creator[] | null = null
+  contributors: Contributor[] | null = null
+  publishers: Publisher[] | null = null
+  rights: Rights[] | null = null
+  descriptions: Description[] | null = null
+  authors: string[] | null = null
 
   constructor(epub: Epub) {
     this.epub = epub
     this.readingOrderList = []
     this.id = epub.epubPackage.uniqueIdentifier
+    this.creators = epub.epubPackage.metadata.creatorList
+    this.contributors = epub.epubPackage.metadata.contributorList
+    if (this.creators.length > 0 || this.contributors.length > 0) {
+      this.authors = []
+      this.creators.forEach(creator => {
+        if (this.authors && creator.contentText) {
+          this.authors.push(creator.contentText)
+        }
+      })
+      this.contributors.forEach(contributor => {
+        if (this.authors && contributor.contentText) {
+          this.authors.push(contributor.contentText)
+        }
+      })
+    }
+    this.publishers = epub.epubPackage.metadata.publisherList
+    this.rights = epub.epubPackage.metadata.rightsList
+    this.descriptions = epub.epubPackage.metadata.descriptionList
     epub.epubPackage.metadata.identifiers.forEach(identifier => {
       if (identifier.id === epub.epubPackage.uniqueIdentifier && identifier.contentText) {
         this.id = identifier.contentText

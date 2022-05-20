@@ -55,6 +55,10 @@ if (options.file) {
                     const epubHelper = new EpubHelper(epub)
                     if (outputOption === 'all' || outputOption === 'metadata') {
                       console.log('id', epubHelper.id)
+                      console.log('authors', epubHelper.authors)
+                      console.log('publisher', epubHelper.publishers)
+                      console.log('description', epubHelper.descriptions)
+                      console.log('rights', epubHelper.rights)
                     }
                     if (epubHelper.nav) {
                       if (outputOption === 'all' || outputOption === 'nav') {
