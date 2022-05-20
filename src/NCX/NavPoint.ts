@@ -1,6 +1,6 @@
 import { XmlElement } from 'xmldoc'
 import NavLabel from './NavLabel'
-import Content from "./Content";
+import Content from './Content'
 
 export default class NavPoint {
   static elementName = 'navPoint'

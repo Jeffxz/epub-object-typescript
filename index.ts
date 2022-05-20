@@ -24,7 +24,6 @@ import PageTarget from './src/NCX/PageTarget'
 import EpubHelper, { ReadingOrderItem } from './src/EpubHelper'
 import { PageMap, Page } from './src/Adobe/PageMap'
 
-
 import * as Constants from './src/constants'
 
 export {
@@ -55,5 +54,5 @@ export {
   PageTarget,
   PageMap,
   Page,
-  Constants
+  Constants,
 }

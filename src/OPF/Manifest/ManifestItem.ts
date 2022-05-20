@@ -42,7 +42,7 @@ export default class ManifestItem {
     if (this.fallback) {
       xmlStr += ` fallback="${this.fallback}"`
     }
-    xmlStr +=` media-type="${this.mediaType}" href="${this.href}"/>`
+    xmlStr += ` media-type="${this.mediaType}" href="${this.href}"/>`
     return xmlStr
   }
 }

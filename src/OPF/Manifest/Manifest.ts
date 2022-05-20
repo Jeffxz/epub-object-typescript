@@ -1,5 +1,5 @@
 import { XmlElement } from 'xmldoc'
-import ManifestItem from "./ManifestItem";
+import ManifestItem from './ManifestItem'
 
 export const CoreMediaTypes: string[] = [
   'image/gif',

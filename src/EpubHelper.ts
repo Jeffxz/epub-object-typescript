@@ -17,7 +17,8 @@ import {
   MANIFEST_PROPERTY_COVER_IMAGE,
   MANIFEST_PROPERTY_MATHML,
   MANIFEST_PROPERTY_NAV,
-  META_ACCESS_MODE, META_ACCESS_MODE_SUFFICIENT,
+  META_ACCESS_MODE,
+  META_ACCESS_MODE_SUFFICIENT,
   META_ACCESSIBILITY_FEATURE,
   META_ACCESSIBILITY_HAZARD,
   META_ACCESSIBILITY_SUMMARY,
@@ -82,11 +83,11 @@ export class ReadingOrderItem {
 export type WCAG_LEVEL = 'a' | 'aa' | 'aaa'
 
 export type A11yAttribute = {
-  wcagLevel?: string,
-  accessMode: string[],
-  accessibilityFeature: string[],
-  accessibilityHazard: string[],
-  accessibilitySummary: string[],
+  wcagLevel?: string
+  accessMode: string[]
+  accessibilityFeature: string[]
+  accessibilityHazard: string[]
+  accessibilitySummary: string[]
   accessModeSufficient?: string[]
 }
 
@@ -103,7 +104,7 @@ export default class EpubHelper {
     accessMode: [],
     accessibilityFeature: [],
     accessibilityHazard: [],
-    accessibilitySummary: []
+    accessibilitySummary: [],
   }
   toc: ManifestItem | null = null
   pageMap: ManifestItem | null = null
@@ -123,12 +124,12 @@ export default class EpubHelper {
     this.contributors = epub.epubPackage.metadata.contributorList
     if (this.creators.length > 0 || this.contributors.length > 0) {
       this.authors = []
-      this.creators.forEach(creator => {
+      this.creators.forEach((creator) => {
         if (this.authors && creator.contentText) {
           this.authors.push(creator.contentText)
         }
       })
-      this.contributors.forEach(contributor => {
+      this.contributors.forEach((contributor) => {
         if (this.authors && contributor.contentText) {
           this.authors.push(contributor.contentText)
         }
@@ -137,8 +138,11 @@ export default class EpubHelper {
     this.publishers = epub.epubPackage.metadata.publisherList
     this.rights = epub.epubPackage.metadata.rightsList
     this.descriptions = epub.epubPackage.metadata.descriptionList
-    epub.epubPackage.metadata.identifiers.forEach(identifier => {
-      if (identifier.id === epub.epubPackage.uniqueIdentifier && identifier.contentText) {
+    epub.epubPackage.metadata.identifiers.forEach((identifier) => {
+      if (
+        identifier.id === epub.epubPackage.uniqueIdentifier &&
+        identifier.contentText
+      ) {
         this.id = identifier.contentText
       }
     })
@@ -148,23 +152,76 @@ export default class EpubHelper {
         if (resourceItem.id == id) {
           const readingOrderItem = new ReadingOrderItem(spineItem, resourceItem)
           if (spineItem.properties) {
-            if (spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_FXL) || spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_FXL_PREFIX)) {
+            if (
+              spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_FXL) ||
+              spineItem.properties.includes(
+                SPINE_LAYOUT_OVERRIDES_VALUE_FXL_PREFIX
+              )
+            ) {
               readingOrderItem.isFixedLayout = true
-            } else if (spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE) || spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE_PREFIX)) {
+            } else if (
+              spineItem.properties.includes(
+                SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE
+              ) ||
+              spineItem.properties.includes(
+                SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE_PREFIX
+              )
+            ) {
               readingOrderItem.isFixedLayout = false
             }
-            if (spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO) || spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO_PREFIX)) {
+            if (
+              spineItem.properties.includes(
+                SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO
+              ) ||
+              spineItem.properties.includes(
+                SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO_PREFIX
+              )
+            ) {
               readingOrderItem.orientationOverride = RENDITION_ORIENTATION.AUTO
-            } else if (spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE) || spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE_PREFIX)) {
-              readingOrderItem.orientationOverride = RENDITION_ORIENTATION.LANDSCAPE
-            } else if (spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT) || spineItem.properties.includes(SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT_PREFIX)) {
-              readingOrderItem.orientationOverride = RENDITION_ORIENTATION.PORTRAIT
+            } else if (
+              spineItem.properties.includes(
+                SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE
+              ) ||
+              spineItem.properties.includes(
+                SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE_PREFIX
+              )
+            ) {
+              readingOrderItem.orientationOverride =
+                RENDITION_ORIENTATION.LANDSCAPE
+            } else if (
+              spineItem.properties.includes(
+                SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT
+              ) ||
+              spineItem.properties.includes(
+                SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT_PREFIX
+              )
+            ) {
+              readingOrderItem.orientationOverride =
+                RENDITION_ORIENTATION.PORTRAIT
             }
-            if (spineItem.properties.includes(SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_CENTER)) {
+            if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_CENTER
+              )
+            ) {
               readingOrderItem.pageSpread = RENDITION_PAGE_SPREAD.CENTER
-            } else if (spineItem.properties.includes(SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT) || spineItem.properties.includes(SPINE_ITEM_PROPERTY_PAGE_SPREAD_LEFT)) {
+            } else if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT
+              ) ||
+              spineItem.properties.includes(
+                SPINE_ITEM_PROPERTY_PAGE_SPREAD_LEFT
+              )
+            ) {
               readingOrderItem.pageSpread = RENDITION_PAGE_SPREAD.LEFT
-            } else if (spineItem.properties.includes(SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT) || spineItem.properties.includes(SPINE_ITEM_PROPERTY_PAGE_SPREAD_RIGHT)) {
+            } else if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT
+              ) ||
+              spineItem.properties.includes(
+                SPINE_ITEM_PROPERTY_PAGE_SPREAD_RIGHT
+              )
+            ) {
               readingOrderItem.pageSpread = RENDITION_PAGE_SPREAD.RIGHT
             }
           }

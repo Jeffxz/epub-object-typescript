@@ -1,8 +1,8 @@
 /* http://idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.4.1 */
 
-import NavMap from "./NavMap";
-import * as XML from "xmldoc";
-import PageList from "./PageList";
+import NavMap from './NavMap'
+import * as XML from 'xmldoc'
+import PageList from './PageList'
 
 export default class Ncx {
   navMap: NavMap

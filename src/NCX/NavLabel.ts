@@ -1,4 +1,4 @@
-import {XmlElement} from "xmldoc";
+import { XmlElement } from 'xmldoc'
 
 export default class NavLabel {
   static elementName = 'navLabel'

@@ -1,7 +1,5 @@
 import { XmlElement } from 'xmldoc'
-import {Itemref} from '../OPF/Spine'
 import * as XML from 'xmldoc'
-import NavMap from '../NCX/NavMap'
 
 export class Page {
   static elementName = 'page'

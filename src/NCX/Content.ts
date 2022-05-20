@@ -1,4 +1,4 @@
-import {XmlElement} from "xmldoc";
+import { XmlElement } from 'xmldoc'
 
 export default class Content {
   static elementName = 'content'

@@ -51,17 +51,26 @@ export const SPINE_ITEM_PROPERTY_PAGE_SPREAD_LEFT = 'page-spread-left'
 export const SPINE_ITEM_PROPERTY_PAGE_SPREAD_RIGHT = 'page-spread-right'
 export const SPINE_LAYOUT_OVERRIDES_VALUE_FXL = 'layout-pre-paginated'
 export const SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE = 'layout-reflowable'
-export const SPINE_LAYOUT_OVERRIDES_VALUE_FXL_PREFIX = 'rendition:layout-pre-paginated'
-export const SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE_PREFIX = 'rendition:layout-reflowable'
-export const SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE = 'orientation-landscape'
+export const SPINE_LAYOUT_OVERRIDES_VALUE_FXL_PREFIX =
+  'rendition:layout-pre-paginated'
+export const SPINE_LAYOUT_OVERRIDES_VALUE_REFLOWABLE_PREFIX =
+  'rendition:layout-reflowable'
+export const SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE =
+  'orientation-landscape'
 export const SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT = 'orientation-portrait'
 export const SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO = 'orientation-auto'
-export const SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE_PREFIX = 'rendition:orientation-landscape'
-export const SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT_PREFIX = 'rendition:orientation-portrait'
-export const SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO_PREFIX = 'rendition:orientation-auto'
-export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_CENTER = 'rendition:page-spread-center'
-export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT = 'rendition:page-spread-left'
-export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT = 'rendition:page-spread-right'
+export const SPINE_ORIENTATION_OVERRIDES_VALUE_LANDSCAPE_PREFIX =
+  'rendition:orientation-landscape'
+export const SPINE_ORIENTATION_OVERRIDES_VALUE_PORTRAIT_PREFIX =
+  'rendition:orientation-portrait'
+export const SPINE_ORIENTATION_OVERRIDES_VALUE_AUTO_PREFIX =
+  'rendition:orientation-auto'
+export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_CENTER =
+  'rendition:page-spread-center'
+export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT =
+  'rendition:page-spread-left'
+export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT =
+  'rendition:page-spread-right'
 
 export const A11Y_CONFORM_TO_IRI_A =
   'http://www.idpf.org/epub/a11y/accessibility-20170105.html#wcag-a'

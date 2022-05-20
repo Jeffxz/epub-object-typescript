@@ -1,5 +1,5 @@
-import {XmlElement} from "xmldoc";
-import PageTarget from "./PageTarget";
+import { XmlElement } from 'xmldoc'
+import PageTarget from './PageTarget'
 
 export default class PageList {
   static elementName = 'pageList'
@@ -9,7 +9,7 @@ export default class PageList {
   static loadFromXMLElement(element: XmlElement): PageList | null {
     const pageTargetNodes = element.childrenNamed(PageTarget.elementName)
     const pageList = new PageList()
-    pageTargetNodes.forEach(item => {
+    pageTargetNodes.forEach((item) => {
       const pageTarget = PageTarget.loadFromXMLElement(item)
       if (pageTarget) {
         pageList.pageTargetList.push(pageTarget)
