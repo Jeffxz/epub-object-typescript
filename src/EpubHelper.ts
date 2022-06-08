@@ -29,7 +29,7 @@ import {
   META_RENDITION_ORIENTATION_VALUE_LANDSCAPE,
   META_RENDITION_ORIENTATION_VALUE_PORTRAIT,
   META_RENDITION_SPREAD_NAME,
-  META_RENDITION_SPREAD_VALUE_AUTO,
+  META_RENDITION_SPREAD_VALUE_BOTH,
   META_RENDITION_SPREAD_VALUE_LANDSCAPE,
   META_RENDITION_SPREAD_VALUE_NONE,
   META_RENDITION_SPREAD_VALUE_PORTRAIT,
@@ -97,7 +97,7 @@ export default class EpubHelper {
   isFixedLayout: boolean
   bookSubType: BookSubType | null = null
   renditionOrientation: RENDITION_ORIENTATION = RENDITION_ORIENTATION.AUTO
-  spreadMode: RENDITION_SPREAD | null = null
+  spreadMode: RENDITION_SPREAD = RENDITION_SPREAD.AUTO
   nav: ManifestItem | null = null
   coverImage: ManifestItem | null = null
   a11yInfo: A11yAttribute = {
@@ -282,11 +282,12 @@ export default class EpubHelper {
                 this.spreadMode = RENDITION_SPREAD.PORTRAIT
                 break
               }
-              case META_RENDITION_SPREAD_VALUE_AUTO: {
-                this.spreadMode = RENDITION_SPREAD.AUTO
+              case META_RENDITION_SPREAD_VALUE_BOTH: {
+                this.spreadMode = RENDITION_SPREAD.BOTH
+                break
               }
               default: {
-                this.spreadMode = null
+                break
               }
             }
             break

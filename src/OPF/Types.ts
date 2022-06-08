@@ -10,17 +10,17 @@ export enum DIR {
 
 export enum RENDITION_SPREAD {
   NONE = 'none',
-  LANDSCAPE = 'langscape',
+  LANDSCAPE = 'landscape',
   PORTRAIT = 'portrait', // deprecated
   BOTH = 'both',
-  AUTO = 'auto',
+  AUTO = 'auto', // default
 }
 
 /**
  * https://w3c.github.io/epub-specs/epub33/core/#orientation
  */
 export enum RENDITION_ORIENTATION {
-  LANDSCAPE = 'langscape',
+  LANDSCAPE = 'landscape',
   PORTRAIT = 'portrait',
   AUTO = 'auto', // default
 }
