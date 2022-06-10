@@ -16,4 +16,13 @@ export default class Creator extends BasicElement {
     }
     return new Creator(text)
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Creator.elementName}`
+    if (this.id) {
+      xmlString += ` id="${this.id}"`
+    }
+    xmlString += `>${this.contentText}</${Creator.elementName}>`
+    return xmlString
+  }
 }

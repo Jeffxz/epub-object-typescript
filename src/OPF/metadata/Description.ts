@@ -16,4 +16,13 @@ export default class Description extends BasicElement {
     }
     return new Description(text)
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Description.elementName}`
+    if (this.id) {
+      xmlString += ` id="${this.id}"`
+    }
+    xmlString += `>${this.contentText}</${Description.elementName}>`
+    return xmlString
+  }
 }

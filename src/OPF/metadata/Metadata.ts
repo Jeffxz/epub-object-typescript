@@ -164,6 +164,16 @@ export default class Metadata {
       xmlString += item.toXmlString()
       xmlString += '\n'
     })
+    this.creatorList.forEach((item) => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
+    this.publisherList.forEach((item) => {
+      xmlString += '\t'
+      xmlString += item.toXmlString()
+      xmlString += '\n'
+    })
     this.metaList.forEach((item) => {
       xmlString += '\t'
       xmlString += item.toXmlString()

@@ -16,4 +16,13 @@ export default class Publisher extends BasicElement {
     }
     return new Publisher(text)
   }
+
+  toXmlString(): string {
+    let xmlString = `<${Publisher.elementName}`
+    if (this.id) {
+      xmlString += ` id="${this.id}"`
+    }
+    xmlString += `>${this.contentText}</${Publisher.elementName}>`
+    return xmlString
+  }
 }

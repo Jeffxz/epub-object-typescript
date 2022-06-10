@@ -6,6 +6,7 @@ import Package from './src/OPF/Package'
 import Manifest from './src/OPF/Manifest/Manifest'
 import ManifestItem from './src/OPF/Manifest/ManifestItem'
 import Creator from './src/OPF/metadata/Creator'
+import Publisher from './src/OPF/metadata/Publisher'
 import Metadata from './src/OPF/metadata/Metadata'
 import Identifier from './src/OPF/metadata/Identifier'
 import Title from './src/OPF/metadata/Title'
@@ -41,6 +42,7 @@ export {
   Title,
   Language,
   Creator,
+  Publisher,
   Meta,
   BasicElement,
   Spine,

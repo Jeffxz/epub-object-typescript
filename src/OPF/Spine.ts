@@ -76,7 +76,11 @@ export default class Spine {
   }
 
   toXmlString(): string {
-    let xmlString = `<${Spine.elementName}>\n`
+    let xmlString = `<${Spine.elementName}`
+    if (this.pageProgressionDirection === DIR.RTL) {
+      xmlString += ' page-progression-direction="rtl" '
+    }
+    xmlString += '>\n'
     this.items.forEach((item) => {
       xmlString += '\t'
       xmlString += item.toXmlString()
