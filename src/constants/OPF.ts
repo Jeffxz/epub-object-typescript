@@ -71,6 +71,16 @@ export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT =
   'rendition:page-spread-left'
 export const SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT =
   'rendition:page-spread-right'
+export const SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_AUTO =
+  'rendition:spread-auto'
+export const SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_NONE =
+  'rendition:spread-none'
+export const SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_LANDSCAPE =
+  'rendition:spread-landscape'
+export const SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_PORTRAIT =
+  'rendition:spread-portrait'
+export const SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_BOTH =
+  'rendition:spread-both'
 
 export const A11Y_CONFORM_TO_IRI_A =
   'http://www.idpf.org/epub/a11y/accessibility-20170105.html#wcag-a'
