@@ -48,6 +48,11 @@ import {
   SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_CENTER,
   SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_LEFT,
   SPINE_SPREAD_PLACEMENT_OVERRIDES_VALUE_RIGHT,
+  SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_AUTO,
+  SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_NONE,
+  SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_LANDSCAPE,
+  SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_PORTRAIT,
+  SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_BOTH,
 } from './constants/OPF'
 import Creator from './OPF/metadata/Creator'
 import Contributor from './OPF/metadata/Contributor'
@@ -223,6 +228,39 @@ export default class EpubHelper {
               )
             ) {
               readingOrderItem.pageSpread = RENDITION_PAGE_SPREAD.RIGHT
+            }
+            if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_AUTO
+              )
+            ) {
+              readingOrderItem.syntheticSpreadOverride = RENDITION_SPREAD.AUTO
+            } else if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_NONE
+              )
+            ) {
+              readingOrderItem.syntheticSpreadOverride = RENDITION_SPREAD.NONE
+            } else if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_LANDSCAPE
+              )
+            ) {
+              readingOrderItem.syntheticSpreadOverride =
+                RENDITION_SPREAD.LANDSCAPE
+            } else if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_PORTRAIT
+              )
+            ) {
+              readingOrderItem.syntheticSpreadOverride =
+                RENDITION_SPREAD.PORTRAIT
+            } else if (
+              spineItem.properties.includes(
+                SPINE_SPREAD_RENDITION_OVERRIDES_VALUE_BOTH
+              )
+            ) {
+              readingOrderItem.syntheticSpreadOverride = RENDITION_SPREAD.BOTH
             }
           }
           this.readingOrderList.push(readingOrderItem)
