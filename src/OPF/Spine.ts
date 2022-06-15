@@ -27,7 +27,12 @@ export class Itemref {
   }
 
   toXmlString(): string {
-    return `<${Itemref.elementName} idref="${this.idref}"/>`
+    let xmlString = `<${Itemref.elementName} idref="${this.idref}" linear="yes"`
+    if (this.properties) {
+      xmlString += ` properties="${this.properties.join()}"`
+    }
+    xmlString += ` />`
+    return xmlString
   }
 }
 

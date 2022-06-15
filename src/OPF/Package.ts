@@ -74,7 +74,14 @@ export default class Package {
 
   toXmlString(): string {
     let packageString = `<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<${Package.elementName} xmlns="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" version="${this.version}" xml:lang="en" unique-identifier="${this.uniqueIdentifier}">
+<${Package.elementName}
+  xmlns="http://www.idpf.org/2007/opf"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  version="${this.version}"
+  xml:lang="en"
+  unique-identifier="${this.uniqueIdentifier}"
+  prefix="rendition: ${Package.PREFIX_RENDITION}">
 `
     packageString += this.metadata.toXmlString()
     packageString += '\n'
