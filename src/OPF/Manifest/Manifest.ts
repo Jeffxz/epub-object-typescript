@@ -39,7 +39,10 @@ export default class Manifest {
 
   static loadFromXMLElement(element: XmlElement): Manifest | null {
     try {
-      const itemNodes = element.childrenNamed(ManifestItem.elementName)
+      let itemNodes = element.childrenNamed(ManifestItem.elementName)
+      if (itemNodes.length == 0) {
+        itemNodes = element.childrenNamed('opf:' + ManifestItem.elementName)
+      }
       const items: ManifestItem[] = []
       for (const node of itemNodes) {
         const item = ManifestItem.loadFromXMLElement(node)
