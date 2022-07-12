@@ -43,15 +43,19 @@ export default class Package {
     let epubPackage: Package | null = null
     try {
       const document = new XML.XmlDocument(xmlString)
-      const metadataNode = document.childNamed(Metadata.elementName)
+      const metadataNode =
+        document.childNamed(Metadata.elementName) ||
+        document.childNamed('opf:' + Metadata.elementName)
       if (metadataNode == null)
         throw new Error(`missing ${Metadata.elementName} from opf file`)
       const metadata = Metadata.loadFromXMLElement(metadataNode)
-      const manifestNode = document.childNamed('manifest')
+      const manifestNode =
+        document.childNamed('manifest') || document.childNamed('opf:manifest')
       if (manifestNode == null)
         throw new Error(`missing ${Manifest.elementName} from opf file`)
       const manifest = Manifest.loadFromXMLElement(manifestNode)
-      const spineNode = document.childNamed('spine')
+      const spineNode =
+        document.childNamed('spine') || document.childNamed('opf:spine')
       if (spineNode == null)
         throw new Error(`missing ${Spine.elementName} from opf file`)
       const spine = Spine.loadFromXMLElement(spineNode)

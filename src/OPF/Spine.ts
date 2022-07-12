@@ -53,7 +53,10 @@ export default class Spine {
   static loadFromXMLElement(element: XmlElement): Spine | null {
     let spine: Spine | null = null
     try {
-      const itemrefNodes = element.childrenNamed(Itemref.elementName)
+      let itemrefNodes = element.childrenNamed(Itemref.elementName)
+      if (itemrefNodes.length == 0) {
+        itemrefNodes = element.childrenNamed('opf:' + Itemref.elementName)
+      }
       const items: Itemref[] = []
       for (const node of itemrefNodes) {
         const item = Itemref.loadFromXMLElement(node)
