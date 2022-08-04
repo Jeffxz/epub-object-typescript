@@ -4,6 +4,7 @@ import {
   RENDITION_ORIENTATION,
   RENDITION_PAGE_SPREAD,
   RENDITION_SPREAD,
+  RENDITION_VIEWPORT,
 } from './OPF/Types'
 import { Itemref } from './OPF/Spine'
 import Language from './OPF/metadata/Language'
@@ -22,6 +23,7 @@ import {
   META_ACCESSIBILITY_FEATURE,
   META_ACCESSIBILITY_HAZARD,
   META_ACCESSIBILITY_SUMMARY,
+  META_FIXED_LAYOUT_JP_VIEWPORT_NAME,
   META_RENDITION_LAYOUT_NAME,
   META_RENDITION_LAYOUT_VALUE_FXL,
   META_RENDITION_ORIENTATION_NAME,
@@ -103,6 +105,7 @@ export default class EpubHelper {
   bookSubType: BookSubType | null = null
   renditionOrientation: RENDITION_ORIENTATION = RENDITION_ORIENTATION.AUTO
   spreadMode: RENDITION_SPREAD = RENDITION_SPREAD.AUTO
+  renditionViewport?: RENDITION_VIEWPORT
   nav: ManifestItem | null = null
   coverImage: ManifestItem | null = null
   a11yInfo: A11yAttribute = {
@@ -379,6 +382,14 @@ export default class EpubHelper {
             }
             break
           }
+          case META_FIXED_LAYOUT_JP_VIEWPORT_NAME: {
+            if (meta.contentText) {
+              this.renditionViewport = this.parseRenditionViewport(
+                meta.contentText
+              )
+            }
+            break
+          }
         }
       }
     }
@@ -395,6 +406,19 @@ export default class EpubHelper {
           this.a11yInfo.wcagLevel = 'aaa'
         }
       }
+    }
+  }
+
+  private parseRenditionViewport = (
+    renditionViewport: string
+  ): RENDITION_VIEWPORT | undefined => {
+    try {
+      return {
+        width: parseInt(renditionViewport.match(/width\s*=\s*(\d+)/)![1], 10),
+        height: parseInt(renditionViewport.match(/height\s*=\s*(\d+)/)![1], 10),
+      }
+    } catch (err) {
+      return undefined
     }
   }
 
