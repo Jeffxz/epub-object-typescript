@@ -40,14 +40,13 @@ export default class Spine {
   static elementName = 'spine'
 
   id?: string
-  pageProgressionDirection: DIR
+  pageProgressionDirection?: DIR
   toc?: string
   pageMap?: string
   items: Itemref[]
 
   constructor(items: Itemref[]) {
     this.items = items
-    this.pageProgressionDirection = DIR.LTR
   }
 
   static loadFromXMLElement(element: XmlElement): Spine | null {
@@ -66,8 +65,12 @@ export default class Spine {
       }
       spine = new Spine(items)
       const direction = element.attr[SPINE_PROGRESSION_DIRECTION]
-      spine.pageProgressionDirection =
-        direction && direction == 'rtl' ? DIR.RTL : DIR.LTR
+
+      if (direction && direction === 'rtl') {
+        spine.pageProgressionDirection = DIR.RTL
+      } else if (direction && direction === 'ltr') {
+        spine.pageProgressionDirection = DIR.LTR
+      }
       const toc = element.attr.toc
       if (toc) {
         spine.toc = toc

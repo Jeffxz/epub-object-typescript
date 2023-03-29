@@ -438,7 +438,7 @@ export default class EpubHelper {
     return this.epub.epubPackage.metadata.languages[0].contentText || 'en'
   }
 
-  readingDirection(): DIR {
+  readingDirection(): DIR | undefined {
     return this.epub.epubPackage.spine.pageProgressionDirection
   }
 }
