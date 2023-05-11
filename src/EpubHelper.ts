@@ -70,6 +70,7 @@ export class ReadingOrderItem {
   spineItem: Itemref
   resourceItem: ManifestItem
   hasMathML = false
+  linear = true
   isFixedLayout = false
   orientationOverride: RENDITION_ORIENTATION | null = null
   syntheticSpreadOverride: RENDITION_SPREAD | null = null
@@ -160,6 +161,9 @@ export default class EpubHelper {
         if (resourceItem.id == id) {
           const readingOrderItem = new ReadingOrderItem(spineItem, resourceItem)
           if (spineItem.properties) {
+            if (spineItem.linear === 'no') {
+              readingOrderItem.linear = false
+            }
             if (
               spineItem.properties.includes(SPINE_LAYOUT_OVERRIDES_VALUE_FXL) ||
               spineItem.properties.includes(
@@ -427,7 +431,7 @@ export default class EpubHelper {
   }
 
   title(): string {
-    return this.epub.epubPackage.metadata.titles[0].contentText || ''
+    return this.epub.epubPackage.metadata.titles[0]?.contentText || ''
   }
 
   languages(): Language[] {
@@ -435,7 +439,7 @@ export default class EpubHelper {
   }
 
   language(): string {
-    return this.epub.epubPackage.metadata.languages[0].contentText || 'en'
+    return this.epub.epubPackage.metadata.languages[0]?.contentText || 'en'
   }
 
   readingDirection(): DIR | undefined {
