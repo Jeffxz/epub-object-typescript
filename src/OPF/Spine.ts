@@ -22,6 +22,7 @@ export class Itemref {
       if (element.attr.properties) {
         item.properties = element.attr.properties.split(' ')
       }
+      item.linear = element.attr.linear
     }
     return item
   }
